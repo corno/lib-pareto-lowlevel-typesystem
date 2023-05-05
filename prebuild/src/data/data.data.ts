@@ -2,7 +2,7 @@ import * as pd from 'pareto-core-data'
 
 import * as g_liana from "lib-liana/dist/main"
 
-import { $ as d_lowlevel_typesystem } from "./models/lowlevel_typesystem.data"
+import { $ as d_lowlevel_typesystem } from "./models/model.data"
 
 export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
     'outputs': pd.a([

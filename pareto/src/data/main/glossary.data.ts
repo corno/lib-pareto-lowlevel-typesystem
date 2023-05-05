@@ -16,7 +16,7 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
         'types': d({
             "GenerateTypescriptParameters": type(group({
                 "path": member(ref(externalTypeReference("common", "Path"))),
-                "data": member(ref(externalTypeReference("model", "Namespace")))
+                "data": member(ref(externalTypeReference("model", "Root")))
             })),
         }),
     },

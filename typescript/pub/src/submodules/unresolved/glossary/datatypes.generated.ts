@@ -148,6 +148,13 @@ export namespace N {
         export namespace T {}
     }
     
+    export namespace Root {
+        
+        export namespace N {}
+        
+        export namespace T {}
+    }
+    
     export namespace Type {
         
         export namespace N {
@@ -452,6 +459,8 @@ export namespace T {
     export type Namespace__Selection<GAnnotation> = {
         readonly 'tail': [ false ] | [ true, T.Namespace__Selection<GAnnotation>]
     }
+    
+    export type Root<GAnnotation> = T.Namespace<GAnnotation>
     
     export namespace Type {
         

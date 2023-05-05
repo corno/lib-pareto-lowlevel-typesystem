@@ -10,13 +10,13 @@ export namespace T {
     
     export namespace GenerateTypescriptParameters {
         
-        export type data = g_model.T.Namespace
+        export type data = g_model.T.Root
         
         export type path = g_common.T.Path
     }
     
     export type GenerateTypescriptParameters = {
-        readonly 'data': g_model.T.Namespace
+        readonly 'data': g_model.T.Root
         readonly 'path': g_common.T.Path
     }
 }

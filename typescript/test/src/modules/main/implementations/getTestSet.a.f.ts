@@ -9,11 +9,11 @@ import { $ as d_data } from "../../../data/simple.data"
 import { A } from "../api.generated"
 
 export const $$: A.getTestSet = ($) => {
-    
+
     g_pub.$b.generateTypescript()(
         {
             'path': pd.a([$.testDirectory, "Foo.ts"]),
-            'data': d_data,
+            'data': g_pub.$b.resolve()(d_data),
         },
         null,
     )

@@ -4,9 +4,12 @@ import {
     aExternalInterfaceReference,
     aInterface,
     aInterfaceMethod,
-    constructor, externalTypeReference,
+    constructor, data, externalTypeReference,
     glossaryParameter,
-    imp
+    imp,
+    procedure,
+    sInterfaceReference,
+    typeReference
 } from "lib-pareto-typescript-project/dist/submodules/glossary/shorthands"
 
 import * as g_glossary from "lib-pareto-typescript-project/dist/submodules/glossary"
@@ -19,7 +22,6 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     }),
 
     'glossary parameters': d({
-        "Annotation": null,
     }),
     'root': {
         'namespaces': d({}),
@@ -34,7 +36,8 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     },
     'synchronous': {
         'interfaces': d({}),
-        'algorithms': d({}),
+        'algorithms': d({
+        }),
 
     },
 }

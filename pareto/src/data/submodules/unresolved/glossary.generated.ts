@@ -85,6 +85,15 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
                     },
                 })]
             },
+            "Root": {
+                'parameters': d({}),
+                'type': <g_glossary.T.Type<pd.SourceLocation>>['reference', ['type', {
+                    'context': ['local', null],
+                    'typeXX': "Namespace",
+                    'tailXX': a([]),
+                    'type arguments': d({}),
+                }]]
+            },
             "Type": {
                 'parameters': d({}),
                 'type': <g_glossary.T.Type<pd.SourceLocation>>['taggedUnion', d({
@@ -263,6 +272,10 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
                         }),
                     },
                 }),
+            },
+            "Root": {
+                'types': d({}),
+                'namespaces': d({}),
             },
             "Type": {
                 'types': d({}),

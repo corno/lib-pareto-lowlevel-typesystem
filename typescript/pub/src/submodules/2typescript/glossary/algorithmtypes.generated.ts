@@ -18,7 +18,7 @@ export namespace SYNC {
         
         
         export namespace P {
-            export type Generate = ($: g_model.T.Namespace, $i: g_fp.SYNC.I.Block) => void
+            export type Generate = ($: g_model.T.Root, $i: g_fp.SYNC.I.Block) => void
         }
     }
 }

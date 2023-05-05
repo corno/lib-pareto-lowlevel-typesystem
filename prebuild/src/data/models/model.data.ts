@@ -113,5 +113,9 @@ export const $: g_liana.T.Type__Library<pd.SourceLocation> = {
                 })),
             })
         ),
+        "Root": globalType(
+            {},
+            resolvedSiblingComponent("Namespace", {}),
+        )
     }),
 }

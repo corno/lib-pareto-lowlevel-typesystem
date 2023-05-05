@@ -12,6 +12,6 @@ import {
 
 export const $: g_llts.T.Namespace<pd.SourceLocation> = ns(
     {}, {}, {
-        "foo": array(optional(string()))
+        "Foo": array(optional(string()))
     }
 )

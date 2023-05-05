@@ -16,44 +16,50 @@ export function ns(
     }
 }
 
-export function funcDecl(
+export function valueFunction(
     typeParameters: RawDictionary<t.T.Type__Parameters.D<pd.SourceLocation>>,
     context: t.T.Type<pd.SourceLocation>,
     parameters: RawDictionary<t.T.Function__Declaration.parameters.D<pd.SourceLocation>>,
-): t.T.Function__Declaration<pd.SourceLocation> {
-    return {
-        'type parameters': pd.d(typeParameters),
-        'context': context,
-        'parameters': pd.d(parameters),
-    }
-}
-
-export function valueFunction(
-    declaration: t.T.Function__Declaration<pd.SourceLocation>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
     return ['value function', {
-        'declaration': declaration,
+        'declaration': {
+            'type parameters': pd.d(typeParameters),
+            'context': context,
+            'parameters': pd.d(parameters),
+        },
         'return type': returnType,
     }]
 }
 
 export function addressFunction(
-    declaration: t.T.Function__Declaration<pd.SourceLocation>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.D<pd.SourceLocation>>,
+    context: t.T.Type<pd.SourceLocation>,
+    parameters: RawDictionary<t.T.Function__Declaration.parameters.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
     return ['address function', {
-        'declaration': declaration,
+        'declaration': {
+            'type parameters': pd.d(typeParameters),
+            'context': context,
+            'parameters': pd.d(parameters),
+        },
         'return type': returnType,
     }]
 }
 
 export function procedure(
-    declaration: t.T.Function__Declaration<pd.SourceLocation>,
+    typeParameters: RawDictionary<t.T.Type__Parameters.D<pd.SourceLocation>>,
+    context: t.T.Type<pd.SourceLocation>,
+    parameters: RawDictionary<t.T.Function__Declaration.parameters.D<pd.SourceLocation>>,
     returnType: t.T.Type<pd.SourceLocation>,
 ): t.T.Type<pd.SourceLocation> {
     return ['procedure', {
-        'declaration': declaration,
+        'declaration': {
+            'type parameters': pd.d(typeParameters),
+            'context': context,
+            'parameters': pd.d(parameters),
+        },
     }]
 }
 

@@ -327,6 +327,45 @@ export namespace N {
                         export namespace T {}
                     }
                     
+                    export namespace type_$_$reference {
+                        
+                        export namespace N {
+                            
+                            export namespace TU {
+                                
+                                export namespace N {
+                                    
+                                    export namespace external {
+                                        
+                                        export namespace N {
+                                            
+                                            export namespace G {
+                                                
+                                                export namespace N {
+                                                    
+                                                    export namespace namespaces {
+                                                        
+                                                        export namespace N {}
+                                                        
+                                                        export namespace T {}
+                                                    }
+                                                }
+                                                
+                                                export namespace T {}
+                                            }
+                                        }
+                                        
+                                        export namespace T {}
+                                    }
+                                }
+                                
+                                export namespace T {}
+                            }
+                        }
+                        
+                        export namespace T {}
+                    }
+                    
                     export namespace value_$_$function {
                         
                         export namespace N {
@@ -521,6 +560,23 @@ export namespace T {
         
         export type tagged__union<GAnnotation> = pt.Dictionary<T.Type<GAnnotation>>
         
+        export namespace type__reference {
+            
+            export namespace external {
+                
+                export type namespaces<GAnnotation> = T.Namespace__Selection<GAnnotation>
+            }
+            
+            export type external<GAnnotation> = {
+                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+            }
+        }
+        
+        export type type__reference<GAnnotation> = 
+            | ['external', {
+                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+            }]
+        
         export namespace value__function {
             
             export type declaration<GAnnotation> = T.Function__Declaration<GAnnotation>
@@ -551,6 +607,11 @@ export namespace T {
         }]
         | ['string', null]
         | ['tagged union', pt.Dictionary<T.Type<GAnnotation>>]
+        | ['type reference', 
+            | ['external', {
+                readonly 'namespaces': T.Namespace__Selection<GAnnotation>
+            }]
+        ]
         | ['value function', {
             readonly 'declaration': T.Function__Declaration<GAnnotation>
             readonly 'return type': T.Type<GAnnotation>

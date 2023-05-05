@@ -159,6 +159,18 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
                         'tailXX': a([]),
                         'type arguments': d({}),
                     }]]],
+                    "type reference": <g_glossary.T.Type<pd.SourceLocation>>['taggedUnion', d({
+                        "external": <g_glossary.T.Type<pd.SourceLocation>>['group', d({
+                            "namespaces": {
+                                'type': <g_glossary.T.Type<pd.SourceLocation>>['reference', ['type', {
+                                    'context': ['local', null],
+                                    'typeXX': "Namespace Selection",
+                                    'tailXX': a([]),
+                                    'type arguments': d({}),
+                                }]],
+                            },
+                        })],
+                    })],
                     "value function": <g_glossary.T.Type<pd.SourceLocation>>['group', d({
                         "declaration": {
                             'type': <g_glossary.T.Type<pd.SourceLocation>>['reference', ['type', {
@@ -378,6 +390,30 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
                                     "D": {
                                         'types': d({}),
                                         'namespaces': d({}),
+                                    },
+                                }),
+                            },
+                            "type reference": {
+                                'types': d({}),
+                                'namespaces': d({
+                                    "TU": {
+                                        'types': d({}),
+                                        'namespaces': d({
+                                            "external": {
+                                                'types': d({}),
+                                                'namespaces': d({
+                                                    "G": {
+                                                        'types': d({}),
+                                                        'namespaces': d({
+                                                            "namespaces": {
+                                                                'types': d({}),
+                                                                'namespaces': d({}),
+                                                            },
+                                                        }),
+                                                    },
+                                                }),
+                                            },
+                                        }),
                                     },
                                 }),
                             },

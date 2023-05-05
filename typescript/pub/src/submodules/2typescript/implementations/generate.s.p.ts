@@ -159,30 +159,30 @@ export const $$: A.generate = ($d) => {
                     })
                 })
                 break
-            // case 'type reference':
-            //     pl.ss($, ($) => {
-            //         switch ($[0]) {
-            //             case 'cyclic sibling':
-            //                 pl.ss($, ($) => {
-            //                     $i.snippet($d.createIdentifier($.key))
-            //                 })
-            //                 break
-            //             case 'sibling':
-            //                 pl.ss($, ($) => {
-            //                     $i.snippet($d.createIdentifier($.key))
-            //                 })
-            //                 break
-            //             case 'external':
-            //                 pl.ss($, ($) => {
-            //                     generate_Namespace__Selection($.namespaces, $i)
-            //                     $i.snippet(`.${$d.createIdentifier($.type.key)}`)
-            //                 })
-            //                 break
-            //             default: pl.au($[0])
-            //         }
-            //         $i.snippet(`FIXME`)
-            //     })
-            //     break
+            case 'type reference':
+                pl.ss($, ($) => {
+                    switch ($[0]) {
+                        // case 'cyclic sibling':
+                        //     pl.ss($, ($) => {
+                        //         $i.snippet($d.createIdentifier($.key))
+                        //     })
+                        //     break
+                        // case 'sibling':
+                        //     pl.ss($, ($) => {
+                        //         $i.snippet($d.createIdentifier($.key))
+                        //     })
+                        //     break
+                        case 'external':
+                            pl.ss($, ($) => {
+                                generate_Namespace__Selection($.namespaces, $i)
+                                //$i.snippet(`.${$d.createIdentifier($.type.key)}`)
+                            })
+                            break
+                        default: pl.au($[0])
+                    }
+                    $i.snippet(`FIXME`)
+                })
+                break
             case 'value function':
                 pl.ss($, ($) => {
                     generate_Function__Declaration($.declaration, $i)

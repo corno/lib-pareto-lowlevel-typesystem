@@ -46,7 +46,7 @@ export const $: g_liana.T.Type__Library<pd.SourceLocation> = {
 
             },
             group({
-                //"namespace": prop(resolvedValueReference(valSel("namespaces"), tempTypeSelection("Namespace"))),
+                //"namespace": prop(lookupReference(lparameter("namespaces"), tempTypeSelection("Namespace"))),
                 "tail": prop(optional(resolvedSiblingComponent("Namespace Selection", {})))
             })
         ),
@@ -97,14 +97,14 @@ export const $: g_liana.T.Type__Library<pd.SourceLocation> = {
                 "tagged union": option(dictionary(resolvedSiblingComponent("Type", {
                     "global types": aLookup(lparameter("global types"))
                 }))),
-                // "type reference": option(taggedUnion({
-                //     "external": option(group({
-                //         "namespaces": prop(resolvedSiblingComponent("Namespace Selection", {})),
-                //         "type": prop(resolvedValueReference(valSel("namespaces", s_group("types")), tempTypeSelection("Type")))
-                //     })),
-                //     "sibling": option(lookupReference(lparameter("resolved siblings"), tempTypeSelection("Type"))),
-                //     "cyclic sibling": option(lookupReference(lparameter("cyclic siblings"), tempTypeSelection("Type"))),
-                // })),
+                "type reference": option(taggedUnion({
+                    "external": option(group({
+                        "namespaces": prop(resolvedSiblingComponent("Namespace Selection", {})),
+                        //"type": prop(resolvedValueReference(valSel("namespaces", s_group("types")), tempTypeSelection("Type")))
+                    })),
+                    //     "sibling": option(lookupReference(lparameter("resolved siblings"), tempTypeSelection("Type"))),
+                    //     "cyclic sibling": option(lookupReference(lparameter("cyclic siblings"), tempTypeSelection("Type"))),
+                })),
                 "value function": option(group({
                     "declaration": prop(resolvedSiblingComponent("Function Declaration", {})),
                     "return type": prop(resolvedSiblingComponent("Type", {

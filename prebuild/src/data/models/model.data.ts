@@ -20,8 +20,12 @@ import {
     t_grp,
     t_tu,
     taggedUnion,
-    tempTypeSelection
+    tempTypeSelection,
+    cyclicSiblingComponent
 } from "lib-liana/dist/submodules/tendril/shorthands"
+
+const dictionaryReference = resolvedValueReference
+const cyclicLookupReference = lookupReference
 
 export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
     'imports': pd.d({}),
@@ -36,36 +40,8 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
         ),
         "Atom": globalType(
             group({
-                "type": prop(resolvedValueReference(tempTypeSelection("Labels", t_grp("atom types")))),
+                "type": prop(dictionaryReference(tempTypeSelection("Labels", t_grp("atom types")))),
             })
-        ),
-        "Dictionary Constraints": globalType(
-            dictionary(group({
-                "type": prop(resolvedSiblingComponent("Type Selection")),
-                "cast": prop(taggedUnion({
-                    "dictionary": constrainedOption(
-                        {
-                            "dictionary": optionConstraint(tempTypeSelection("Type", t_grp("type")), "dictionary")
-                        },
-                        group({}),
-                    )
-                }))
-            }))
-        ),
-        "Option Constraints": globalType(
-            dictionary(group({
-                "type": prop(resolvedSiblingComponent("Type Selection")),
-                "cast": prop(taggedUnion({
-                    "tagged union": constrainedOption(
-                        {
-                            "tagged union": optionConstraint(tempTypeSelection("Type", t_grp("type")), "tagged union")
-                        },
-                        group({
-                            "option": prop(resolvedValueReference(tempTypeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))),
-                        }),
-                    )
-                }))
-            }))
         ),
         "Type": globalType(
             group({
@@ -78,70 +54,83 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                             "no": option(group({
                             })),
                             "yes": option(group({
-
-                                "type": prop(resolvedSiblingComponent("Type Selection")),
-                                "cast": prop(taggedUnion({
-                                    "dictionary": constrainedOption(
-                                        {
-                                            "dictionary": optionConstraint(tempTypeSelection("Type", t_grp("type")), "dictionary")
-                                        },
-                                        group({}),
-                                    )
-                                })),
-                                "computed": prop(taggedUnion({
-                                    "no": option(group({})),
-                                    "yes": option(group({})),
-                                }))
+                                "type": prop(cyclicSiblingComponent("Collection Reference")),
                             })),
                         })),
                     })),
                     "dictionary": option(group({
                         "key": prop(resolvedSiblingComponent("Atom")),
-                        "constraints": prop(resolvedSiblingComponent("Dictionary Constraints")),
-                        "type": prop(resolvedSiblingComponent("Type")),
+                        "constraints": prop(dictionary(cyclicSiblingComponent("Collection Reference"))),
+                        "type": prop(cyclicSiblingComponent("Type")),
                     })),
                     "array": option(group({
-                        "type": prop(resolvedSiblingComponent("Type")),
+                        "type": prop(cyclicSiblingComponent("Type")),
                     })),
                     "optional": option(group({
-                        "type": prop(resolvedSiblingComponent("Type")),
+                        "type": prop(cyclicSiblingComponent("Type")),
                     })),
                     "tagged union": option(group({
                         "options": prop(dictionary(group({
-                            "constraints": prop(resolvedSiblingComponent("Option Constraints")),
-                            "type": prop(resolvedSiblingComponent("Type")),
+                            "constraints": prop(cyclicSiblingComponent("Option Constraints")),
+                            "type": prop(cyclicSiblingComponent("Type")),
                         }))),
                     })),
                     "group": option(group({
-                        "properties": prop(resolvedSiblingComponent("Properties")),
+                        "properties": prop(dictionary(group({
+                            "type": prop(cyclicSiblingComponent("Type")),
+                        }))),
                     })),
                     "component": option(group({
-                        "context": prop(taggedUnion({
-                            "resolved sibling": option(group({
-                                "type": prop(resolvedValueReference(tempTypeSelection("Type Library", t_grp("global types")))),
-                            })),
-                            "import": option(group({
-                                "library": prop(resolvedValueReference(tempTypeSelection("Imports"))),
-                                "type": prop(resolvedValueReference(tempTypeSelection("Type Library", t_grp("global types")))),
-                            })),
-                            "cyclic sibling": option(group({
-                                "type": prop(lookupReference(tempTypeSelection("Type Library", t_grp("global types")))),
-                            })),
-                        })),
+                        "type": prop(cyclicSiblingComponent("Global Type Selection")),
                     })),
                 })),
             })
         ),
-        "Properties": globalType(
+        "Global Type Selection": globalType(
+            taggedUnion({
+                "resolved sibling": option(group({
+                    "type": prop(dictionaryReference(tempTypeSelection("Global Types"))),
+                })),
+                "import": option(group({
+                    "library": prop(dictionaryReference(tempTypeSelection("Imports"))),
+                    "type": prop(dictionaryReference(tempTypeSelection("Global Types"))),
+                })),
+                "cyclic sibling": option(group({
+                    "type": prop(lookupReference(tempTypeSelection("Global Types"), true)),
+                })),
+            }),
+        ),
+        "Option Constraints": globalType(
             dictionary(group({
-                "type": prop(resolvedSiblingComponent("Type")),
+                "type": prop(resolvedSiblingComponent("Type Selection")),
+                "cast": prop(taggedUnion({
+                    "tagged union": constrainedOption(
+                        {
+                            "tagged union": optionConstraint(tempTypeSelection("Type", t_grp("type")), "tagged union")
+                        },
+                        group({
+                            "option": prop(dictionaryReference(tempTypeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))),
+                        }),
+                    )
+                }))
             }))
         ),
-        "Global Type Selection": globalType(
-            group({
-                "import": prop(optional(resolvedValueReference(tempTypeSelection("Imports")))),
-                "type": prop(resolvedValueReference(tempTypeSelection("Type Library", t_grp("global types")))),
-            }),
+        "Collection Reference": globalType(
+            taggedUnion({
+                "dictionary": option(group({
+                    "type": prop(resolvedSiblingComponent("Type Selection")),
+                    "cast": prop(taggedUnion({
+                        "dictionary": constrainedOption(
+                            {
+                                "dictionary": optionConstraint(tempTypeSelection("Type", t_grp("type")), "dictionary")
+                            },
+                            group({}),
+                        )
+                    })),
+    
+                })),
+                "lookup": option(cyclicSiblingComponent("Global Type Selection")),
+            })
         ),
         "Labels": globalType(
             group({
@@ -155,11 +144,6 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                 },
                 group({})
                 )
-        ),
-        "Global Type": globalType(
-            group({
-                "type": prop(resolvedSiblingComponent("Type")),
-            })
         ),
         "Type Selection Tail": globalType(
             group({
@@ -176,12 +160,12 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                     "group": constrainedOption({
                         "group": optionConstraint(tempTypeSelection("Type", t_grp("type")), "group")
                     }, group({
-                        "property": prop(resolvedValueReference(tempTypeSelection("Properties")))
+                        "property": prop(dictionaryReference(tempTypeSelection("Type", t_grp("type", t_tu("group", t_grp("properties"))))))
                     })),
                     "tagged union": constrainedOption({
                         "tagged union": optionConstraint(tempTypeSelection("Type", t_grp("type")), "tagged union")
                     }, group({
-                        "option": prop(resolvedValueReference(tempTypeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))),
+                        "option": prop(dictionaryReference(tempTypeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))),
                     })),
                 })),
                 "tail": prop(optional(resolvedSiblingComponent("Type Selection Tail")))
@@ -189,21 +173,27 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
         ),
         "Type Selection": globalType(
             group({
-                "global type": prop(resolvedSiblingComponent("Global Type Selection")),
+                "import": prop(optional(dictionaryReference(tempTypeSelection("Imports")))),
+                "global type": prop(dictionaryReference(tempTypeSelection("Global Types"))),
                 "tail": prop(optional(resolvedSiblingComponent("Type Selection Tail")))
             }),
+        ),
+        "Global Types": globalType(
+            dictionary(group({
+                "type": prop(resolvedSiblingComponent("Type")),
+            }))
         ),
         "Type Library": globalType(
             group({
                 "imports": prop(resolvedSiblingComponent("Imports")),
                 "labels": prop(resolvedSiblingComponent("Labels")),
-                "global types": prop(dictionary(resolvedSiblingComponent("Global Type"))),
+                "global types": prop(resolvedSiblingComponent("Global Types")),
             })
         ),
         "Model": globalType(
             group({
                 "type library": prop(resolvedSiblingComponent("Type Library")),
-                "root": prop(resolvedValueReference(tempTypeSelection("Type Library", t_grp("global types")))),
+                "root": prop(dictionaryReference(tempTypeSelection("Global Types"))),
             })
         ),
         "Root": globalType(

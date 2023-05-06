@@ -2,8 +2,8 @@ import * as pt from 'pareto-core-types'
 
 import { T } from "./datatypes.generated"
 
-import * as g_fp from "lib-fountain-pen"
-import * as g_model from "../../resolved"
+import * as g_in from "../../resolved"
+import * as g_out from "lib-proto-typesystem/dist/submodules/resolved"
 
 export namespace ASYNC {
     
@@ -17,8 +17,8 @@ export namespace SYNC {
     export namespace A {
         
         
-        export namespace P {
-            export type Generate = ($: g_model.T.Root, $i: g_fp.SYNC.I.Block) => void
+        export namespace F {
+            export type Map = ($: g_in.T.Root) => g_out.T.Root
         }
     }
 }

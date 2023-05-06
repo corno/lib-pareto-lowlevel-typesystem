@@ -13,18 +13,4 @@ export namespace ASYNC {
     export namespace A {}
 }
 
-export namespace SYNC {
-    
-    export namespace I {
-        
-        export type nothing = null
-    }
-    
-    export namespace A {
-        
-        
-        export namespace P {
-            export type GenerateTypescript = ($: T.GenerateTypescriptParameters, $i: SYNC.I.nothing) => void
-        }
-    }
-}
+export namespace SYNC {}

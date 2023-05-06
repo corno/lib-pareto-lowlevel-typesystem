@@ -9,11 +9,18 @@ import * as a_resolveRes from "res-pareto-resolve"
 import { A } from "../api.generated"
 
 export const $$: A.resolve = () => {
-    return a_resolve.$a.resolve({
-        'resolveDictionary': a_resolveRes.$r.safeResolveDictionary({
+    return a_resolve.$a.resolve(
+        {
+            'resolveDictionary': a_resolveRes.$r.safeResolveDictionary({
+                'onError': ($) => {
+                    pd.logDebugMessage($)
+                }
+            })
+        },
+        {
             'onError': ($) => {
-                pd.logDebugMessage($)
+                $.annotation
             }
-        })
-    })
+        }
+    )
 }

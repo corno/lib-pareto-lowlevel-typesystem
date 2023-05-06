@@ -1,6 +1,6 @@
 import * as pd from 'pareto-core-data'
 
-import * as g_tendril from "lib-liana/dist/submodules/tendril"
+import * as g_pareto_lang_data from "../../../pub/dist/submodules/unresolved"
 
 import {
     array,
@@ -21,9 +21,9 @@ import {
     t_tu,
     taggedUnion,
     tempTypeSelection
-} from "lib-liana/dist/submodules/tendril/shorthands"
+} from "../../../pub/dist/submodules/unresolved/shorthands"
 
-export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
+export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
     'imports': pd.d({}),
     'labels': {
         'atom types': pd.d({

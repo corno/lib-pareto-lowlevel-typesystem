@@ -12,7 +12,6 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     }),
 
         'glossary parameters': d({
-            //"Annotation": null,
         }),
 
         'root': {
@@ -27,7 +26,7 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
         'synchronous': {
             'interfaces': d({}),
             'algorithms': d({
-                "Generate": procedure(data(externalTypeReference("model", "Root")), sExternalInterfaceReference("fp", "Block")),
+                "Map": sfunction(externalTypeReference("out", "Root", { }), data(externalTypeReference("in", "Root", { }))),
             }),
         },
 }

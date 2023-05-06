@@ -2,13 +2,13 @@ import * as pd from 'pareto-core-data'
 
 import * as g_liana from "lib-liana/dist/main"
 
-import { $ as d_lowlevel_typesystem } from "./models/model.data"
+import { $ as d_model } from "./models/model.data"
 
 export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
     'outputs': pd.a([
         {
             'path': pd.a([`../../pareto/src/data/submodules/resolved/glossary.generated.ts`]),
-            'data': ['liana', {
+            'data': ['tendril', {
                 'settings': {
                     'annotations': false,
                     'datamodel': [true, {
@@ -23,7 +23,7 @@ export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
                     },
                 },
                 'mapped library': {
-                    'library': d_lowlevel_typesystem,
+                    'library': d_model,
 
                     'terminal mapping': pd.d({
                         "identifier": ['string', null],
@@ -33,7 +33,7 @@ export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
         },
         {
             'path': pd.a([`../../pareto/src/data/submodules/possiblyresolved/glossary.generated.ts`]),
-            'data': ['liana', {
+            'data': ['tendril', {
                 'settings': {
                     'annotations': true,
                     'datamodel': [true, {
@@ -48,7 +48,7 @@ export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
                     },
                 },
                 'mapped library': {
-                    'library': d_lowlevel_typesystem,
+                    'library': d_model,
 
                     'terminal mapping': pd.d({
                         "identifier": ['string', null],
@@ -58,7 +58,7 @@ export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
         },
         {
             'path': pd.a([`../../pareto/src/data/submodules/unresolved/glossary.generated.ts`]),
-            'data': ['liana', {
+            'data': ['tendril', {
                 'settings': {
                     'annotations': true,
                     'datamodel': [true, {
@@ -73,7 +73,7 @@ export const $: g_liana.T.CompileParameters<pd.SourceLocation> = {
                     },
                 },
                 'mapped library': {
-                    'library': d_lowlevel_typesystem,
+                    'library': d_model,
 
                     'terminal mapping': pd.d({
                         "identifier": ['string', null],

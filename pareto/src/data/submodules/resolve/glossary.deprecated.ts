@@ -1,6 +1,6 @@
 import * as pd from 'pareto-core-data'
 
-import { data, externalTypeReference, glossaryParameter, group, imp, member, number, procedure, sExternalInterfaceReference, sfunction, string, type, typeReference } from "lib-pareto-typescript-project/dist/submodules/glossary/shorthands"
+import { data, dictionary, externalTypeReference, glossaryParameter, group, imp, member, number, procedure, ref, sExternalInterfaceReference, sInterface, sInterfaceMethod, sfunction, string, taggedUnion, type, typeReference } from "lib-pareto-typescript-project/dist/submodules/glossary/shorthands"
 
 import * as g_glossary from "lib-pareto-typescript-project/dist/submodules/glossary"
 
@@ -8,9 +8,8 @@ const d = pd.d
 
 export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
     'imports': d({
-        "unresolved": imp(),
-        "resolved": imp(),
-        "model": imp(),
+        "in": imp(),
+        "out": imp(),
     }),
 
         'glossary parameters': d({
@@ -20,6 +19,23 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
         'root': {
             'namespaces': d({}),
             'types': d({
+                "Error": type(group({
+                    "annotation": member(ref(glossaryParameter("Annotation"))),
+                    "message": member(taggedUnion({
+                        "no such entry": group({
+                            "key": member(string())
+                        }),
+                        "not the right state": group({
+                            "expected": member(string()),
+                            "found": member(string())
+                        })
+                    }))
+                })),
+                "Resolve Parameters": type(group({
+                    "root": member(ref(externalTypeReference("in", "Root", { "Annotation": glossaryParameter("Annotation"), }))),
+                    "imports": member(dictionary(ref(externalTypeReference("out", "Type Library"))))
+
+                }))
             }),
         },
         'asynchronous': {
@@ -27,9 +43,11 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
             'algorithms': d({}),
         },
         'synchronous': {
-            'interfaces': d({}),
+            'interfaces': d({
+                "OnError": sInterface(sInterfaceMethod(typeReference("Error")))
+            }),
             'algorithms': d({
-                "Resolve": sfunction(externalTypeReference("resolved", "Root", { "Annotation": glossaryParameter("Annotation"), }), data(externalTypeReference("unresolved", "Root", { "Annotation": glossaryParameter("Annotation"), }))),
+                "Resolve": sfunction(externalTypeReference("out", "Root"), data(typeReference("Resolve Parameters"))),
             }),
         },
 }

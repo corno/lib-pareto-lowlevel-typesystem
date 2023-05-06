@@ -13,7 +13,7 @@ import { $ as d_unresolved } from "./submodules/unresolved/module.data"
 import { $ as d_possiblyresolved } from "./submodules/possiblyresolved/module.data"
 import { $ as d_resolve } from "./submodules/resolve/module.data"
 import { $ as d_serialize } from "./submodules/serialize/module.data"
-import { $ as d_2typescript } from "./submodules/2typescript/module.data"
+import { $ as d_prototypesystem } from "./submodules/2prototypesystem/module.data"
 
 import { external, submodule, tempSubmodule, this_ } from "lib-pareto-typescript-project/dist/submodules/project/shorthands"
 
@@ -25,10 +25,7 @@ export const $: g_project.T.Project<pd.SourceLocation> = {
 
     'dependencies': d({
         "res-pareto-resolve": null,
-        "res-pareto-foreach": null,
-        "res-pareto-collation": null,
-        "res-typescript": null,
-        "lib-fountain-pen": null,
+        "lib-proto-typesystem": null,
     }),
     'type': ['library', {
         'main': {
@@ -45,7 +42,6 @@ export const $: g_project.T.Project<pd.SourceLocation> = {
                     'root': api,
                     'imports': d({
                         "this": this_(),
-                        "2typescript": submodule("2typescript"),
                         "fp": external("lib-fountain-pen"),
                     }),
                 },
@@ -57,7 +53,7 @@ export const $: g_project.T.Project<pd.SourceLocation> = {
             "resolved": d_resolved,
             "resolve": d_resolve,
             "serialize": d_serialize,
-            "2typescript": d_2typescript,
+            "2prototypesystem": d_prototypesystem,
             "possiblyresolved": d_possiblyresolved,
         }),
         'bindings': [true, {
@@ -67,6 +63,7 @@ export const $: g_project.T.Project<pd.SourceLocation> = {
         'executables': d({}),
         'test': {
             'dependencies': d({
+                "res-pareto-resolve": null,
             }),
             'definition': {
                 'glossary': {

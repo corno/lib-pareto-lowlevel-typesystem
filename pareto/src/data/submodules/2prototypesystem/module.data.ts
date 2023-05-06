@@ -13,8 +13,8 @@ export const $: g_project.T.Module<pd.SourceLocation> = {
         'glossary': {
             'root': glossary,
             'imports': d({
-                "model": sibling("resolved"),
-                "fp": external("lib-fountain-pen"),
+                "in": sibling("resolved"),
+                "out": external("lib-proto-typesystem/dist/submodules/resolved"),
             }),
 
         },
@@ -22,8 +22,7 @@ export const $: g_project.T.Module<pd.SourceLocation> = {
             'root': api,
             'imports': d({
                 "this": this_(),
-                "typescript": external("res-typescript"),
-                "foreach": external("res-pareto-foreach")
+                "resolve": external("res-pareto-resolve")
             }),
         },
     },

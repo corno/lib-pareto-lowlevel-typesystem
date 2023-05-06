@@ -94,14 +94,14 @@ export const $: g_glossary.T.Glossary<pd.SourceLocation> = {
                         "type": {
                             'type': <g_glossary.T.Type<pd.SourceLocation>>['group', d({
                                 "constraint": {
-                                    'type': <g_glossary.T.Type<pd.SourceLocation>>['reference', ['type', {
+                                    'type': <g_glossary.T.Type<pd.SourceLocation>>['computed', <g_glossary.T.Type<pd.SourceLocation>>['reference', ['type', {
                                         'context': ['local', null],
                                         'typeXX': "Global Types",
                                         'tailXX': a([
                                             "D",
                                         ]),
                                         'type arguments': d({}),
-                                    }]],
+                                    }]]],
                                 },
                                 "key": {
                                     'type': <g_glossary.T.Type<pd.SourceLocation>>['string', null],

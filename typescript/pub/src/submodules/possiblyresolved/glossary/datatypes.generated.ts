@@ -1107,17 +1107,22 @@ export namespace T {
                 
                 export namespace constraint {
                     
-                    export type O<GAnnotation> = T.Global__Types.D<GAnnotation>
+                    export namespace O {
+                        
+                        export type C<GAnnotation> = T.Global__Types.D<GAnnotation>
+                    }
+                    
+                    export type O<GAnnotation> = () => T.Global__Types.D<GAnnotation>
                 }
                 
-                export type constraint<GAnnotation> = [ false ] | [ true, T.Global__Types.D<GAnnotation>]
+                export type constraint<GAnnotation> = [ false ] | [ true, () => T.Global__Types.D<GAnnotation>]
                 
                 export type key<GAnnotation> = string
             }
             
             export type _ltype<GAnnotation> = {
                 readonly 'annotation': GAnnotation
-                readonly 'constraint': [ false ] | [ true, T.Global__Types.D<GAnnotation>]
+                readonly 'constraint': [ false ] | [ true, () => T.Global__Types.D<GAnnotation>]
                 readonly 'key': string
             }
         }
@@ -1125,7 +1130,7 @@ export namespace T {
         export type cyclic__sibling<GAnnotation> = {
             readonly 'type': {
                 readonly 'annotation': GAnnotation
-                readonly 'constraint': [ false ] | [ true, T.Global__Types.D<GAnnotation>]
+                readonly 'constraint': [ false ] | [ true, () => T.Global__Types.D<GAnnotation>]
                 readonly 'key': string
             }
         }
@@ -1222,7 +1227,7 @@ export namespace T {
         | ['cyclic sibling', {
             readonly 'type': {
                 readonly 'annotation': GAnnotation
-                readonly 'constraint': [ false ] | [ true, T.Global__Types.D<GAnnotation>]
+                readonly 'constraint': [ false ] | [ true, () => T.Global__Types.D<GAnnotation>]
                 readonly 'key': string
             }
         }]

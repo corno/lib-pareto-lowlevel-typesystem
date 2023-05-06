@@ -1083,6 +1083,11 @@ export namespace T {
             
             export namespace _ltype {
                 
+                export namespace constraint {
+                    
+                    export type C = T.Global__Types.D
+                }
+                
                 export type constraint = () => T.Global__Types.D
                 
                 export type key = string

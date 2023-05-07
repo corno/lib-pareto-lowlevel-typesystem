@@ -128,13 +128,13 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     ) => g_out.T.Model
 
 
-    type Map_Option__Constraints = (
-        $: g_in.T.Option__Constraints<Annotation>,
+    type Map_Tagged__Union__Selection = (
+        $: g_in.T.Tagged__Union__Selection<Annotation>,
         $p: {
             'imports': g_out.T.Imports,
             'sibling global types': pt.Lookup<g_out.T.Global__Types.D>
         },
-    ) => g_out.T.Option__Constraints
+    ) => g_out.T.Tagged__Union__Selection
 
     type Map_Root = (
         $: g_in.T.Root<Annotation>,
@@ -181,7 +181,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
         'type': getAnnotatedEntry($p.labels['atom types'], $.type)
     })
 
-    const map_Dictionary__Selection: Map_Dictionary__Selection= ($, $p) => {
+    const map_Dictionary__Selection: Map_Dictionary__Selection = ($, $p) => {
         const x = $.cast
 
         const v_type = map_Type__Selection($.type, $p)
@@ -244,43 +244,41 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
         }
     }
 
-    const map_Option__Constraints: Map_Option__Constraints = ($, $p) => {
-        return $.map(($) => {
-            const v_type = map_Type__Selection($.type, $p)
-            return {
-                'type': v_type.content,
-                'cast': ['tagged union', pl.cc($.cast, ($) => {
-                    switch ($[0]) {
-                        case 'tagged union': return pl.ss($, ($) => {
-                            const x = $
-                            const c_tagged_union = pl.cc(v_type.result, ($) => {
-                                if ($.type[0] !== 'tagged union') {
-                                    $se.onError({
-                                        'annotation': x.annotation,
-                                        'message': ['not the right state', {
-                                            'found': $.type[0],
-                                            'expected': `tagged union`
-                                        }]
-                                    })
-                                    return pl.panic(`not a dictionary`)
-                                }
-                                return $.type[1]
-                            })
-                            const v_option = getAnnotatedEntry(c_tagged_union.options, $.content.option)
-                            return {
-                                'constraints': {
-                                    'tagged union': c_tagged_union
-                                },
-                                'content': {
-                                    'option': v_option,
-                                }
+    const map_Tagged__Union__Selection: Map_Tagged__Union__Selection = ($, $p) => {
+        const v_type = map_Type__Selection($.type, $p)
+        return {
+            'type': v_type.content,
+            'cast': ['tagged union', pl.cc($.cast, ($) => {
+                switch ($[0]) {
+                    case 'tagged union': return pl.ss($, ($) => {
+                        const x = $
+                        const c_tagged_union = pl.cc(v_type.result, ($) => {
+                            if ($.type[0] !== 'tagged union') {
+                                $se.onError({
+                                    'annotation': x.annotation,
+                                    'message': ['not the right state', {
+                                        'found': $.type[0],
+                                        'expected': `tagged union`
+                                    }]
+                                })
+                                return pl.panic(`not a dictionary`)
                             }
+                            return $.type[1]
                         })
-                        default: return pl.au($[0])
-                    }
-                })],
-            }
-        })
+                        const v_option = getAnnotatedEntry(c_tagged_union.options, $.content.option)
+                        return {
+                            'constraints': {
+                                'tagged union': c_tagged_union
+                            },
+                            'content': {
+                                'option': v_option,
+                            }
+                        }
+                    })
+                    default: return pl.au($[0])
+                }
+            })],
+        }
     }
 
     const map_Root: Map_Root = ($, $p) => {
@@ -335,7 +333,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
                             'options': $d.resolveDictionary($.options, {
                                 'map': ($, $l) => {
                                     return {
-                                        'constraints': map_Option__Constraints($.value.constraints, $p),
+                                        'constraints': $.value.constraints.map(($) => map_Tagged__Union__Selection($, $p)),
                                         'type': map_Type($.value.type, $p),
                                     }
                                 }

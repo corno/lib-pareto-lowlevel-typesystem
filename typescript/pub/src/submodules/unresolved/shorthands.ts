@@ -199,7 +199,7 @@ export function option(
 export function optionConstraint(
     type: g_this.T.Type__Selection<pd.SourceLocation>,
     option: string,
-): g_this.T.Option__Constraints.D<pd.SourceLocation> {
+): g_this.T.Type._ltype.tagged__union.options.D.constraints.D<pd.SourceLocation> {
     return {
         'type': type,
         'cast': ['tagged union', {
@@ -216,7 +216,7 @@ export function optionConstraint(
 }
 
 export function constrainedOption(
-    constraints: RawDictionary<g_this.T.Option__Constraints.D<pd.SourceLocation>>,
+    constraints: RawDictionary< g_this.T.Type._ltype.tagged__union.options.D.constraints.D<pd.SourceLocation>>,
     type: g_this.T.Type<pd.SourceLocation>,
 ): g_this.T.Type._ltype.tagged__union.options.D<pd.SourceLocation> {
     return {

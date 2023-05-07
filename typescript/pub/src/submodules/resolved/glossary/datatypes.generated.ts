@@ -310,41 +310,40 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Option_$_$Constraints {
+    export namespace Root {
+        
+        export namespace N {}
+        
+        export namespace T {}
+    }
+    
+    export namespace Tagged_$_$Union_$_$Selection {
         
         export namespace N {
             
-            export namespace D {
+            export namespace G {
                 
                 export namespace N {
                     
-                    export namespace G {
+                    export namespace cast {
                         
                         export namespace N {
                             
-                            export namespace cast {
+                            export namespace TU {
                                 
                                 export namespace N {
                                     
-                                    export namespace TU {
+                                    export namespace tagged_$_$union {
                                         
                                         export namespace N {
                                             
-                                            export namespace tagged_$_$union {
+                                            export namespace G {
                                                 
                                                 export namespace N {
                                                     
-                                                    export namespace G {
+                                                    export namespace option {
                                                         
-                                                        export namespace N {
-                                                            
-                                                            export namespace option {
-                                                                
-                                                                export namespace N {}
-                                                                
-                                                                export namespace T {}
-                                                            }
-                                                        }
+                                                        export namespace N {}
                                                         
                                                         export namespace T {}
                                                     }
@@ -360,14 +359,14 @@ export namespace N {
                                 
                                 export namespace T {}
                             }
-                            
-                            export namespace _$ltype {
-                                
-                                export namespace N {}
-                                
-                                export namespace T {}
-                            }
                         }
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace _$ltype {
+                        
+                        export namespace N {}
                         
                         export namespace T {}
                     }
@@ -376,13 +375,6 @@ export namespace N {
                 export namespace T {}
             }
         }
-        
-        export namespace T {}
-    }
-    
-    export namespace Root {
-        
-        export namespace N {}
         
         export namespace T {}
     }
@@ -686,7 +678,15 @@ export namespace N {
                                                                             
                                                                             export namespace constraints {
                                                                                 
-                                                                                export namespace N {}
+                                                                                export namespace N {
+                                                                                    
+                                                                                    export namespace D {
+                                                                                        
+                                                                                        export namespace N {}
+                                                                                        
+                                                                                        export namespace T {}
+                                                                                    }
+                                                                                }
                                                                                 
                                                                                 export namespace T {}
                                                                             }
@@ -1355,93 +1355,76 @@ export namespace T {
         readonly 'type library': T.Type__Library
     }
     
-    export namespace Option__Constraints {
+    export type Root = T.Model
+    
+    export namespace Tagged__Union__Selection {
         
-        export namespace D {
+        export namespace cast {
             
-            export namespace cast {
+            export namespace tagged__union {
                 
-                export namespace tagged__union {
+                export namespace constraints {
                     
-                    export namespace constraints {
+                    export type tagged__union = T.Type._ltype.tagged__union
+                }
+                
+                export type constraints = {
+                    readonly 'tagged union': T.Type._ltype.tagged__union
+                }
+                
+                export namespace content {
+                    
+                    export namespace option {
                         
-                        export type tagged__union = T.Type._ltype.tagged__union
+                        export type constraint = T.Type._ltype.tagged__union.options.D
+                        
+                        export type key = string
                     }
                     
-                    export type constraints = {
-                        readonly 'tagged union': T.Type._ltype.tagged__union
-                    }
-                    
-                    export namespace content {
-                        
-                        export namespace option {
-                            
-                            export type constraint = T.Type._ltype.tagged__union.options.D
-                            
-                            export type key = string
-                        }
-                        
-                        export type option = {
-                            readonly 'constraint': T.Type._ltype.tagged__union.options.D
-                            readonly 'key': string
-                        }
-                    }
-                    
-                    export type content = {
-                        readonly 'option': {
-                            readonly 'constraint': T.Type._ltype.tagged__union.options.D
-                            readonly 'key': string
-                        }
+                    export type option = {
+                        readonly 'constraint': T.Type._ltype.tagged__union.options.D
+                        readonly 'key': string
                     }
                 }
                 
-                export type tagged__union = {
-                    readonly 'constraints': {
-                        readonly 'tagged union': T.Type._ltype.tagged__union
-                    }
-                    readonly 'content': {
-                        readonly 'option': {
-                            readonly 'constraint': T.Type._ltype.tagged__union.options.D
-                            readonly 'key': string
-                        }
+                export type content = {
+                    readonly 'option': {
+                        readonly 'constraint': T.Type._ltype.tagged__union.options.D
+                        readonly 'key': string
                     }
                 }
             }
             
-            export type cast = 
-                | ['tagged union', {
-                    readonly 'constraints': {
-                        readonly 'tagged union': T.Type._ltype.tagged__union
+            export type tagged__union = {
+                readonly 'constraints': {
+                    readonly 'tagged union': T.Type._ltype.tagged__union
+                }
+                readonly 'content': {
+                    readonly 'option': {
+                        readonly 'constraint': T.Type._ltype.tagged__union.options.D
+                        readonly 'key': string
                     }
-                    readonly 'content': {
-                        readonly 'option': {
-                            readonly 'constraint': T.Type._ltype.tagged__union.options.D
-                            readonly 'key': string
-                        }
-                    }
-                }]
-            
-            export type _ltype = T.Type__Selection
+                }
+            }
         }
         
-        export type D = {
-            readonly 'cast': 
-                | ['tagged union', {
-                    readonly 'constraints': {
-                        readonly 'tagged union': T.Type._ltype.tagged__union
+        export type cast = 
+            | ['tagged union', {
+                readonly 'constraints': {
+                    readonly 'tagged union': T.Type._ltype.tagged__union
+                }
+                readonly 'content': {
+                    readonly 'option': {
+                        readonly 'constraint': T.Type._ltype.tagged__union.options.D
+                        readonly 'key': string
                     }
-                    readonly 'content': {
-                        readonly 'option': {
-                            readonly 'constraint': T.Type._ltype.tagged__union.options.D
-                            readonly 'key': string
-                        }
-                    }
-                }]
-            readonly 'type': T.Type__Selection
-        }
+                }
+            }]
+        
+        export type _ltype = T.Type__Selection
     }
     
-    export type Option__Constraints = pt.Dictionary<{
+    export type Tagged__Union__Selection = {
         readonly 'cast': 
             | ['tagged union', {
                 readonly 'constraints': {
@@ -1455,9 +1438,7 @@ export namespace T {
                 }
             }]
         readonly 'type': T.Type__Selection
-    }>
-    
-    export type Root = T.Model
+    }
     
     export namespace Type {
         
@@ -1600,26 +1581,31 @@ export namespace T {
                     
                     export namespace D {
                         
-                        export type constraints = T.Option__Constraints
+                        export namespace constraints {
+                            
+                            export type D = T.Tagged__Union__Selection
+                        }
+                        
+                        export type constraints = pt.Dictionary<T.Tagged__Union__Selection>
                         
                         export type _ltype = T.Type
                     }
                     
                     export type D = {
-                        readonly 'constraints': T.Option__Constraints
+                        readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection>
                         readonly 'type': T.Type
                     }
                 }
                 
                 export type options = pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection>
                     readonly 'type': T.Type
                 }>
             }
             
             export type tagged__union = {
                 readonly 'options': pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection>
                     readonly 'type': T.Type
                 }>
             }
@@ -1714,7 +1700,7 @@ export namespace T {
             }]
             | ['tagged union', {
                 readonly 'options': pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection>
                     readonly 'type': T.Type
                 }>
             }]
@@ -1764,7 +1750,7 @@ export namespace T {
             }]
             | ['tagged union', {
                 readonly 'options': pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection>
                     readonly 'type': T.Type
                 }>
             }]

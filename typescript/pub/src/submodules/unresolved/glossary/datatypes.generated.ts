@@ -310,41 +310,40 @@ export namespace N {
         export namespace T {}
     }
     
-    export namespace Option_$_$Constraints {
+    export namespace Root {
+        
+        export namespace N {}
+        
+        export namespace T {}
+    }
+    
+    export namespace Tagged_$_$Union_$_$Selection {
         
         export namespace N {
             
-            export namespace D {
+            export namespace G {
                 
                 export namespace N {
                     
-                    export namespace G {
+                    export namespace cast {
                         
                         export namespace N {
                             
-                            export namespace cast {
+                            export namespace TU {
                                 
                                 export namespace N {
                                     
-                                    export namespace TU {
+                                    export namespace tagged_$_$union {
                                         
                                         export namespace N {
                                             
-                                            export namespace tagged_$_$union {
+                                            export namespace G {
                                                 
                                                 export namespace N {
                                                     
-                                                    export namespace G {
+                                                    export namespace option {
                                                         
-                                                        export namespace N {
-                                                            
-                                                            export namespace option {
-                                                                
-                                                                export namespace N {}
-                                                                
-                                                                export namespace T {}
-                                                            }
-                                                        }
+                                                        export namespace N {}
                                                         
                                                         export namespace T {}
                                                     }
@@ -360,14 +359,14 @@ export namespace N {
                                 
                                 export namespace T {}
                             }
-                            
-                            export namespace _$ltype {
-                                
-                                export namespace N {}
-                                
-                                export namespace T {}
-                            }
                         }
+                        
+                        export namespace T {}
+                    }
+                    
+                    export namespace _$ltype {
+                        
+                        export namespace N {}
                         
                         export namespace T {}
                     }
@@ -376,13 +375,6 @@ export namespace N {
                 export namespace T {}
             }
         }
-        
-        export namespace T {}
-    }
-    
-    export namespace Root {
-        
-        export namespace N {}
         
         export namespace T {}
     }
@@ -686,7 +678,15 @@ export namespace N {
                                                                             
                                                                             export namespace constraints {
                                                                                 
-                                                                                export namespace N {}
+                                                                                export namespace N {
+                                                                                    
+                                                                                    export namespace D {
+                                                                                        
+                                                                                        export namespace N {}
+                                                                                        
+                                                                                        export namespace T {}
+                                                                                    }
+                                                                                }
                                                                                 
                                                                                 export namespace T {}
                                                                             }
@@ -1326,80 +1326,65 @@ export namespace T {
         readonly 'type library': T.Type__Library<GAnnotation>
     }
     
-    export namespace Option__Constraints {
+    export type Root<GAnnotation> = T.Model<GAnnotation>
+    
+    export namespace Tagged__Union__Selection {
         
-        export namespace D {
+        export namespace cast {
             
-            export namespace cast {
+            export namespace tagged__union {
                 
-                export namespace tagged__union {
+                export type annotation<GAnnotation> = GAnnotation
+                
+                export namespace content {
                     
-                    export type annotation<GAnnotation> = GAnnotation
-                    
-                    export namespace content {
+                    export namespace option {
                         
-                        export namespace option {
-                            
-                            export type annotation<GAnnotation> = GAnnotation
-                            
-                            export type key<GAnnotation> = string
-                        }
+                        export type annotation<GAnnotation> = GAnnotation
                         
-                        export type option<GAnnotation> = {
-                            readonly 'annotation': GAnnotation
-                            readonly 'key': string
-                        }
+                        export type key<GAnnotation> = string
                     }
                     
-                    export type content<GAnnotation> = {
-                        readonly 'option': {
-                            readonly 'annotation': GAnnotation
-                            readonly 'key': string
-                        }
+                    export type option<GAnnotation> = {
+                        readonly 'annotation': GAnnotation
+                        readonly 'key': string
                     }
                 }
                 
-                export type tagged__union<GAnnotation> = {
-                    readonly 'annotation': GAnnotation
-                    readonly 'content': {
-                        readonly 'option': {
-                            readonly 'annotation': GAnnotation
-                            readonly 'key': string
-                        }
+                export type content<GAnnotation> = {
+                    readonly 'option': {
+                        readonly 'annotation': GAnnotation
+                        readonly 'key': string
                     }
                 }
             }
             
-            export type cast<GAnnotation> = 
-                | ['tagged union', {
-                    readonly 'annotation': GAnnotation
-                    readonly 'content': {
-                        readonly 'option': {
-                            readonly 'annotation': GAnnotation
-                            readonly 'key': string
-                        }
+            export type tagged__union<GAnnotation> = {
+                readonly 'annotation': GAnnotation
+                readonly 'content': {
+                    readonly 'option': {
+                        readonly 'annotation': GAnnotation
+                        readonly 'key': string
                     }
-                }]
-            
-            export type _ltype<GAnnotation> = T.Type__Selection<GAnnotation>
+                }
+            }
         }
         
-        export type D<GAnnotation> = {
-            readonly 'cast': 
-                | ['tagged union', {
-                    readonly 'annotation': GAnnotation
-                    readonly 'content': {
-                        readonly 'option': {
-                            readonly 'annotation': GAnnotation
-                            readonly 'key': string
-                        }
+        export type cast<GAnnotation> = 
+            | ['tagged union', {
+                readonly 'annotation': GAnnotation
+                readonly 'content': {
+                    readonly 'option': {
+                        readonly 'annotation': GAnnotation
+                        readonly 'key': string
                     }
-                }]
-            readonly 'type': T.Type__Selection<GAnnotation>
-        }
+                }
+            }]
+        
+        export type _ltype<GAnnotation> = T.Type__Selection<GAnnotation>
     }
     
-    export type Option__Constraints<GAnnotation> = pt.Dictionary<{
+    export type Tagged__Union__Selection<GAnnotation> = {
         readonly 'cast': 
             | ['tagged union', {
                 readonly 'annotation': GAnnotation
@@ -1411,9 +1396,7 @@ export namespace T {
                 }
             }]
         readonly 'type': T.Type__Selection<GAnnotation>
-    }>
-    
-    export type Root<GAnnotation> = T.Model<GAnnotation>
+    }
     
     export namespace Type {
         
@@ -1556,26 +1539,31 @@ export namespace T {
                     
                     export namespace D {
                         
-                        export type constraints<GAnnotation> = T.Option__Constraints<GAnnotation>
+                        export namespace constraints {
+                            
+                            export type D<GAnnotation> = T.Tagged__Union__Selection<GAnnotation>
+                        }
+                        
+                        export type constraints<GAnnotation> = pt.Dictionary<T.Tagged__Union__Selection<GAnnotation>>
                         
                         export type _ltype<GAnnotation> = T.Type<GAnnotation>
                     }
                     
                     export type D<GAnnotation> = {
-                        readonly 'constraints': T.Option__Constraints<GAnnotation>
+                        readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection<GAnnotation>>
                         readonly 'type': T.Type<GAnnotation>
                     }
                 }
                 
                 export type options<GAnnotation> = pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints<GAnnotation>
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection<GAnnotation>>
                     readonly 'type': T.Type<GAnnotation>
                 }>
             }
             
             export type tagged__union<GAnnotation> = {
                 readonly 'options': pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints<GAnnotation>
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection<GAnnotation>>
                     readonly 'type': T.Type<GAnnotation>
                 }>
             }
@@ -1670,7 +1658,7 @@ export namespace T {
             }]
             | ['tagged union', {
                 readonly 'options': pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints<GAnnotation>
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection<GAnnotation>>
                     readonly 'type': T.Type<GAnnotation>
                 }>
             }]
@@ -1720,7 +1708,7 @@ export namespace T {
             }]
             | ['tagged union', {
                 readonly 'options': pt.Dictionary<{
-                    readonly 'constraints': T.Option__Constraints<GAnnotation>
+                    readonly 'constraints': pt.Dictionary<T.Tagged__Union__Selection<GAnnotation>>
                     readonly 'type': T.Type<GAnnotation>
                 }>
             }]

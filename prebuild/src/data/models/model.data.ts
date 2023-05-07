@@ -84,7 +84,7 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                     })),
                     "tagged union": option(group({
                         "options": prop(dictionary(group({
-                            "constraints": prop(cyclicSiblingComponent("Option Constraints")),
+                            "constraints": prop(dictionary(cyclicSiblingComponent("Tagged Union Selection"))),
                             "type": prop(cyclicSiblingComponent("Type")),
                         }))),
                     })),
@@ -113,8 +113,8 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                 })),
             }),
         ),
-        "Option Constraints": globalType(
-            dictionary(group({
+        "Tagged Union Selection": globalType(
+            group({
                 "type": prop(resolvedSiblingComponent("Type Selection")),
                 "cast": prop(taggedUnion({
                     "tagged union": constrainedOption(
@@ -126,7 +126,7 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                         }),
                     )
                 }))
-            }))
+            })
         ),
         "Dictionary Selection": globalType(
             group({

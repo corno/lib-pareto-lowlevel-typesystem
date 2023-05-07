@@ -17,11 +17,13 @@ import {
     taggedUnion,
     typeSelection,
     component,
-    lookupReference,
     cyclicSibling,
     resolvedSibling,
-    reference,
-    dirRef
+    resolvedReference,
+    dict,
+    dictSel,
+    lookup,
+    lookupConstraint,
 } from "../../../pub/dist/submodules/unresolved/shorthands"
 
 export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
@@ -35,7 +37,7 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
     'global types': pd.d({
         "Atom": globalType(
             group({
-                "type": prop(reference(dirRef(typeSelection("Labels", t_grp("atom types"))))),
+                "type": prop(resolvedReference(dict(dictSel(typeSelection("Labels", t_grp("atom types")))))),
             })
         ),
         "Type": globalType(
@@ -51,8 +53,8 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
                             "yes": option(group({
                                 "type": prop(taggedUnion({
                                     "dictionary": option(component(cyclicSibling("Dictionary Reference"))),
-                                    "cyclic lookup": option(reference(lookupReference(cyclicSibling("Global Types")))),
-                                    "non cyclic lookup": option(reference(lookupReference(cyclicSibling("Global Types")))),
+                                    "cyclic lookup": option(resolvedReference(lookup(cyclicSibling("Global Types")))),
+                                    "non cyclic lookup": option(resolvedReference(lookup(cyclicSibling("Global Types")))),
                                 })),
                             })),
                         })),
@@ -82,14 +84,14 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
                     "component": option(group({
                         "context": prop(taggedUnion({
                             "resolved sibling": option(group({
-                                "type": prop(reference(lookupReference(cyclicSibling("Global Types")))),
+                                "type": prop(resolvedReference(lookup(cyclicSibling("Global Types")))),
                             })),
                             "import": option(group({
-                                "library": prop(reference(dirRef(typeSelection("Imports")))),
-                                "type": prop(reference(lookupReference(cyclicSibling("Global Types")))),
+                                "library": prop(resolvedReference(dict(dictSel(typeSelection("Imports"))))),
+                                "type": prop(resolvedReference(lookup(cyclicSibling("Global Types")))),
                             })),
                             "cyclic sibling": option(group({
-                                "type": prop(reference(lookupReference(cyclicSibling("Global Types")))),
+                                "type": prop(resolvedReference(lookup(cyclicSibling("Global Types")))),
                             })),
                         })),
                     })),
@@ -120,7 +122,7 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
                             "tagged union": optionConstraint(typeSelection("Type", t_grp("type")), "tagged union")
                         },
                         group({
-                            "option": prop(reference(dirRef(typeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options"))))))),
+                            "option": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))))),
                         }),
                     )
                 }))
@@ -148,7 +150,7 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         "Imports": globalType(
             constrainedDictionary(
                 {
-                    "library": lookupReference(cyclicSibling("Dummy Type Library Lookup"))
+                    "library": lookupConstraint(cyclicSibling("Dummy Type Library Lookup"))
                 },
                 group({})
             )
@@ -168,12 +170,12 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
                     "group": constrainedOption({
                         "group": optionConstraint(typeSelection("Type", t_grp("type")), "group")
                     }, group({
-                        "property": prop(reference(dirRef(typeSelection("Type", t_grp("type", t_tu("group", t_grp("properties")))))))
+                        "property": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_tu("group", t_grp("properties"))))))))
                     })),
                     "tagged union": constrainedOption({
                         "tagged union": optionConstraint(typeSelection("Type", t_grp("type")), "tagged union")
                     }, group({
-                        "option": prop(reference(dirRef(typeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options"))))))),
+                        "option": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))))),
                     })),
                 })),
                 "tail": prop(optional(component(cyclicSibling("Type Selection Tail"))))
@@ -186,8 +188,8 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         ),
         "Type Selection": globalType(
             group({
-                "import": prop(optional(reference(dirRef(typeSelection("Imports"))))),
-                "global type": prop(reference(lookupReference(resolvedSibling("Global Types")))),
+                "import": prop(optional(resolvedReference(dict(dictSel(typeSelection("Imports")))))),
+                "global type": prop(resolvedReference(lookup(resolvedSibling("Global Types")))),
                 "tail": prop(optional(component(resolvedSibling("Type Selection Tail"))))
             }),
         ),
@@ -199,12 +201,12 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
             })
         ),
         "Dummy Type Library Lookup": globalType(
-            dictionary(reference(lookupReference(resolvedSibling("Type Library"))))
+            dictionary(resolvedReference(lookup(resolvedSibling("Type Library"))))
         ),
         "Model": globalType(
             group({
                 "type library": prop(component(resolvedSibling("Type Library"))),
-                "root": prop(reference(dirRef(typeSelection("Global Types")))),
+                "root": prop(resolvedReference(dict(dictSel(typeSelection("Global Types"))))),
             })
         ),
         "Root": globalType(

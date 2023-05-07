@@ -60,8 +60,8 @@ export function prop(type: g_this.T.Type<pd.SourceLocation>): g_this.T.Type<pd.S
     return type
 }
 
-export function reference(
-    colref: g_this.T.Collection__Reference<pd.SourceLocation>,
+export function resolvedReference(
+    colref: g_this.T.Type._ltype.terminal.constrained.yes.resolved<pd.SourceLocation>,
 ): g_this.T.Type<pd.SourceLocation> {
     return {
         'type': ['terminal', {
@@ -71,33 +71,69 @@ export function reference(
                     'key': "identifier",
                 }
             },
-            'constrained': ['yes', {
-                'type': colref,
-            }],
+            'constrained': ['yes', ['resolved', colref]],
         }]
     }
 }
-export function dirRef(
+
+export function cyclicReference(
+    gloRef: g_this.T.Global__Type__Selection<pd.SourceLocation>,
+): g_this.T.Type<pd.SourceLocation> {
+    return {
+        'type': ['terminal', {
+            'terminal': {
+                'type': {
+                    'annotation': pd.getLocationInfo(1),
+                    'key': "identifier",
+                }
+            },
+            'constrained': ['yes', ['cyclic', gloRef]],
+        }]
+    }
+}
+
+export function dictSel(
     type: g_this.T.Type__Selection<pd.SourceLocation>,
-): g_this.T.Collection__Reference<pd.SourceLocation> {
-    return ['dictionary', {
+): g_this.T.Dictionary__Selection<pd.SourceLocation> {
+    return {
         'type': type,
         'cast': ['dictionary', {
             'annotation': pd.getLocationInfo(1),
             'content': null,
         }],
-    }]
+    }
 }
 
-export function lookupReference(
+export function lookup(
     type: g_this.T.Global__Type__Selection<pd.SourceLocation>,
-): g_this.T.Collection__Reference<pd.SourceLocation> {
+): g_this.T.Type._ltype.terminal.constrained.yes.resolved<pd.SourceLocation> {
     return ['lookup', type]
+}
+
+export function dict(
+    type: g_this.T.Dictionary__Selection<pd.SourceLocation>,
+): g_this.T.Type._ltype.terminal.constrained.yes.resolved<pd.SourceLocation> {
+    return ['dictionary', type]
+}
+
+export function lookupConstraint(
+    gloSel: g_this.T.Global__Type__Selection<pd.SourceLocation>
+): g_this.T.Type._ltype.dictionary.constraints.D<pd.SourceLocation> {
+    return ['lookup', gloSel]
+}
+export function dictionaryConstraint(
+    dictSel: g_this.T.Dictionary__Selection<pd.SourceLocation>,
+    dense: boolean
+): g_this.T.Type._ltype.dictionary.constraints.D<pd.SourceLocation> {
+    return ['dictionary', {
+        'dictionary': dictSel,
+        'dense': dense ? ['yes', null] : ['no', null]
+    }]
 }
 
 
 export function constrainedDictionary(
-    constraints: RawDictionary<g_this.T.Collection__Reference<pd.SourceLocation>>,
+    constraints: RawDictionary<g_this.T.Type._ltype.dictionary.constraints.D<pd.SourceLocation>>,
     type: g_this.T.Type<pd.SourceLocation>
 ): g_this.T.Type<pd.SourceLocation> {
     return {

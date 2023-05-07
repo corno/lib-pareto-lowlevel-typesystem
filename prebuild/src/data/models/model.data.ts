@@ -53,14 +53,27 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                         "constrained": prop(taggedUnion({
                             "no": option(group({
                             })),
-                            "yes": option(group({
-                                "type": prop(cyclicSiblingComponent("Collection Reference")),
+                            "yes": option(taggedUnion({
+                                "resolved": option(taggedUnion({
+                                    "dictionary": option(cyclicSiblingComponent("Dictionary Selection")),
+                                    "lookup": option(cyclicSiblingComponent("Global Type Selection")),
+                                })),
+                                "cyclic": option(cyclicSiblingComponent("Global Type Selection")),
                             })),
                         })),
                     })),
                     "dictionary": option(group({
                         "key": prop(resolvedSiblingComponent("Atom")),
-                        "constraints": prop(dictionary(cyclicSiblingComponent("Collection Reference"))),
+                        "constraints": prop(dictionary(taggedUnion({
+                            "dictionary": option(group({
+                                "dictionary": prop(cyclicSiblingComponent("Dictionary Selection")),
+                                "dense": prop(taggedUnion({
+                                    "no": option(group({})),
+                                    "yes": option(group({})),
+                                }))
+                            })),
+                            "lookup": option(cyclicSiblingComponent("Global Type Selection")),
+                        }))),
                         "type": prop(cyclicSiblingComponent("Type")),
                     })),
                     "array": option(group({
@@ -115,21 +128,18 @@ export const $: g_tendril.T.Type__Library<pd.SourceLocation> = {
                 }))
             }))
         ),
-        "Collection Reference": globalType(
-            taggedUnion({
-                "dictionary": option(group({
-                    "type": prop(resolvedSiblingComponent("Type Selection")),
-                    "cast": prop(taggedUnion({
-                        "dictionary": constrainedOption(
-                            {
-                                "dictionary": optionConstraint(tempTypeSelection("Type", t_grp("type")), "dictionary")
-                            },
-                            group({}),
-                        )
-                    })),
-    
+        "Dictionary Selection": globalType(
+            group({
+                "type": prop(resolvedSiblingComponent("Type Selection")),
+                "cast": prop(taggedUnion({
+                    "dictionary": constrainedOption(
+                        {
+                            "dictionary": optionConstraint(tempTypeSelection("Type", t_grp("type")), "dictionary")
+                        },
+                        group({}),
+                    )
                 })),
-                "lookup": option(cyclicSiblingComponent("Global Type Selection")),
+
             })
         ),
         "Labels": globalType(

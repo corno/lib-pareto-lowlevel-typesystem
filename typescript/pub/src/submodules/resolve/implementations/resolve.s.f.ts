@@ -98,7 +98,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     type Map_Atom = (
         $: g_in.T.Atom<Annotation>,
         $p: {
-            'labels': g_out.T.Labels,
+            'atom types': g_out.T.Atom__Types,
         }
     ) => g_out.T.Atom
 
@@ -128,13 +128,13 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     ) => g_out.T.Model
 
 
-    type Map_Tagged__Union__Selection = (
-        $: g_in.T.Tagged__Union__Selection<Annotation>,
+    type Map_State__Group__Selection = (
+        $: g_in.T.State__Group__Selection<Annotation>,
         $p: {
             'imports': g_out.T.Imports,
             'sibling global types': pt.Lookup<g_out.T.Global__Types.D>
         },
-    ) => g_out.T.Tagged__Union__Selection
+    ) => g_out.T.State__Group__Selection
 
     type Map_Root = (
         $: g_in.T.Root<Annotation>,
@@ -146,7 +146,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     type Map_Type = (
         $: g_in.T.Type<Annotation>,
         $p: {
-            'labels': g_out.T.Labels,
+            'atom types': g_out.T.Atom__Types,
             'imports': g_out.T.Imports,
             'sibling global types': pt.Lookup<g_out.T.Global__Types.D>,
             'cyclic sibling global types': pt.Lookup<() => g_out.T.Global__Types.D>,
@@ -178,7 +178,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
     ) => g_out.T.Type__Library
 
     const map_Atom: Map_Atom = ($, $p) => ({
-        'type': getAnnotatedEntry($p.labels['atom types'], $.type)
+        'type': getAnnotatedEntry($p['atom types'], $.type)
     })
 
     const map_Dictionary__Selection: Map_Dictionary__Selection = ($, $p) => {
@@ -244,34 +244,34 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
         }
     }
 
-    const map_Tagged__Union__Selection: Map_Tagged__Union__Selection = ($, $p) => {
+    const map_State__Group__Selection: Map_State__Group__Selection = ($, $p) => {
         const v_type = map_Type__Selection($.type, $p)
         return {
             'type': v_type.content,
-            'cast': ['tagged union', pl.cc($.cast, ($) => {
+            'cast': ['state group', pl.cc($.cast, ($) => {
                 switch ($[0]) {
-                    case 'tagged union': return pl.ss($, ($) => {
+                    case 'state group': return pl.ss($, ($) => {
                         const x = $
                         const c_tagged_union = pl.cc(v_type.result, ($) => {
-                            if ($.type[0] !== 'tagged union') {
+                            if ($.type[0] !== 'state group') {
                                 $se.onError({
                                     'annotation': x.annotation,
                                     'message': ['not the right state', {
                                         'found': $.type[0],
-                                        'expected': `tagged union`
+                                        'expected': `state group`
                                     }]
                                 })
                                 return pl.panic(`not a dictionary`)
                             }
                             return $.type[1]
                         })
-                        const v_option = getAnnotatedEntry(c_tagged_union.options, $.content.option)
+                        const v_state = getAnnotatedEntry(c_tagged_union.states, $.content.state)
                         return {
                             'constraints': {
-                                'tagged union': c_tagged_union
+                                'state group': c_tagged_union
                             },
                             'content': {
-                                'option': v_option,
+                                'state': v_state,
                             }
                         }
                     })
@@ -312,7 +312,7 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
                                 default: return pl.au($[0])
                             }
                         })),
-                        'key': map_Atom($.key, { 'labels': $p.labels }),
+                        'key': map_Atom($.key, { 'atom types': $p['atom types'] }),
                         'type': map_Type($.type, $p)
                     }])
                     case 'group': return pl.ss($, ($) => {
@@ -328,47 +328,44 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
                     case 'optional': return pl.ss($, ($) => ['optional', {
                         'type': map_Type($.type, $p),
                     }])
-                    case 'tagged union': return pl.ss($, ($) => {
-                        return ['tagged union', {
-                            'options': $d.resolveDictionary($.options, {
+                    case 'state group': return pl.ss($, ($) => {
+                        return ['state group', {
+                            'states': $d.resolveDictionary($.states, {
                                 'map': ($, $l) => {
                                     return {
-                                        'constraints': $.value.constraints.map(($) => map_Tagged__Union__Selection($, $p)),
+                                        'constraints': $.value.constraints.map(($) => map_State__Group__Selection($, $p)),
                                         'type': map_Type($.value.type, $p),
                                     }
                                 }
                             }),
                         }]
                     })
-                    case 'terminal': return pl.ss($, ($) => {
-                        return ['terminal', {
-                            'constrained': pl.cc($.constrained, ($) => {
+                    case 'cyclic reference': return pl.ss($, ($) => {
+                        return ['cyclic reference', {
+                            'atom': map_Atom($.atom, { 'atom types': $p['atom types'] }),
+                            'sibling': map_Global__Type__Selection($.sibling, $p)
+                        }]
+                    })
+                    case 'resolved reference': return pl.ss($, ($) => {
+                        return ['resolved reference', {
+                            'atom': map_Atom($.atom, { 'atom types': $p['atom types'] }),
+                            'value': pl.cc($.value, ($) => {
                                 switch ($[0]) {
-                                    case 'no': return pl.ss($, ($) => ['no', $])
-                                    case 'yes': return pl.ss($, ($) => {
-                                        return ['yes', pl.cc($, ($): g_out.T.Type._ltype.terminal.constrained.yes => {
-                                            switch ($[0]) {
-                                                case 'cyclic': return pl.ss($, ($) => ['cyclic', map_Global__Type__Selection($, $p)])
-                                                case 'resolved': return pl.ss($, ($) => ['resolved', pl.cc($, ($): g_out.T.Type._ltype.terminal.constrained.yes.resolved => {
-                                                    switch ($[0]) {
-                                                        case 'lookup': return pl.ss($, ($) => {
-                                                            const v_gts = map_Global__Type__Selection($, $p)
-                                                            return ['lookup', v_gts]
-                                                        })
-                                                        case 'dictionary': return pl.ss($, ($) => {
-                                                            return ['dictionary', map_Dictionary__Selection($, $p)]
-                                                        })
-                                                        default: return pl.au($[0])
-                                                    }
-                                                })])
-                                                default: return pl.au($[0])
-                                            }
-                                        })]
+                                    case 'lookup': return pl.ss($, ($) => {
+                                        const v_gts = map_Global__Type__Selection($, $p)
+                                        return ['lookup', v_gts]
+                                    })
+                                    case 'dictionary': return pl.ss($, ($) => {
+                                        return ['dictionary', map_Dictionary__Selection($, $p)]
                                     })
                                     default: return pl.au($[0])
                                 }
-                            }),
-                            'terminal': map_Atom($.terminal, { 'labels': $p.labels }),
+                            })
+                        }]
+                    })
+                    case 'atom': return pl.ss($, ($) => {
+                        return ['atom', {
+                            'atom': map_Atom($.atom, { 'atom types': $p['atom types'] }),
                         }]
                     })
                     default: return pl.au($[0])
@@ -524,34 +521,34 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
                         'result': v_optional.type,
                     }
                 })
-                case 'tagged union': return pl.ss($, ($) => {
+                case 'state group': return pl.ss($, ($) => {
                     const x = $
 
-                    const v_tagged_union = pl.cc($p.context.type, ($) => {
-                        if ($[0] !== 'tagged union') {
+                    const v_state_group = pl.cc($p.context.type, ($) => {
+                        if ($[0] !== 'state group') {
                             $se.onError({
                                 'annotation': x.annotation,
                                 'message': ['not the right state', {
                                     'found': $[0],
-                                    'expected': `tagged union`
+                                    'expected': `state group`
                                 }]
                             })
-                            pl.panic(`not a tagged union`)
+                            pl.panic(`not a state group`)
                         }
                         return $[1]
                     })
-                    const v_option = getAnnotatedEntry(v_tagged_union.options, $.content.option)
+                    const v_state = getAnnotatedEntry(v_state_group.states, $.content.state)
 
                     return {
-                        'content': ['tagged union', {
+                        'content': ['state group', {
                             'constraints': {
-                                'tagged union': v_tagged_union,
+                                'state group': v_state_group,
                             },
                             'content': {
-                                'option': v_option
+                                'state': v_state
                             },
                         }],
-                        'result': v_option.constraint.type,
+                        'result': v_state.constraint.type,
                     }
                 })
                 default: return pl.au($[0])
@@ -587,17 +584,15 @@ export const $$: A.resolve = <Annotation>($d: D.resolve<Annotation>, $se: {
                 'content': null
             }
         })
-        const labels = {
-            'atom types': $.labels['atom types'].map(($) => null)
-        }
+        const v_atom__types = $['atom types'].map(($) => null)
         return {
             'imports': imports,
-            'labels': labels,
+            'atom types': v_atom__types,
             'global types': $d.resolveDictionary($['global types'], {
                 'map': (($, $l) => {
                     return {
                         'type': map_Type($.value.type, {
-                            'labels': labels,
+                            'atom types': v_atom__types,
                             'imports': imports,
                             'sibling global types': $l['non circular siblings'],
                             'cyclic sibling global types': $l['all siblings'],

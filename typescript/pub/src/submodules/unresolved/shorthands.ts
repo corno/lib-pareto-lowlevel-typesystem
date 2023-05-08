@@ -61,17 +61,17 @@ export function prop(type: g_this.T.Type<pd.SourceLocation>): g_this.T.Type<pd.S
 }
 
 export function resolvedReference(
-    colref: g_this.T.Type._ltype.terminal.constrained.yes.resolved<pd.SourceLocation>,
+    val: g_this.T.Type._ltype.resolved__reference.value<pd.SourceLocation>,
 ): g_this.T.Type<pd.SourceLocation> {
     return {
-        'type': ['terminal', {
-            'terminal': {
+        'type': ['resolved reference', {
+            'atom': {
                 'type': {
                     'annotation': pd.getLocationInfo(1),
                     'key': "identifier",
                 }
             },
-            'constrained': ['yes', ['resolved', colref]],
+            'value': val,
         }]
     }
 }
@@ -80,14 +80,14 @@ export function cyclicReference(
     gloRef: g_this.T.Global__Type__Selection<pd.SourceLocation>,
 ): g_this.T.Type<pd.SourceLocation> {
     return {
-        'type': ['terminal', {
-            'terminal': {
+        'type': ['cyclic reference', {
+            'atom': {
                 'type': {
                     'annotation': pd.getLocationInfo(1),
                     'key': "identifier",
                 }
             },
-            'constrained': ['yes', ['cyclic', gloRef]],
+            'sibling': gloRef,
         }]
     }
 }
@@ -106,13 +106,13 @@ export function dictSel(
 
 export function lookup(
     type: g_this.T.Global__Type__Selection<pd.SourceLocation>,
-): g_this.T.Type._ltype.terminal.constrained.yes.resolved<pd.SourceLocation> {
+): g_this.T.Type._ltype.resolved__reference.value<pd.SourceLocation> {
     return ['lookup', type]
 }
 
 export function dict(
     type: g_this.T.Dictionary__Selection<pd.SourceLocation>,
-): g_this.T.Type._ltype.terminal.constrained.yes.resolved<pd.SourceLocation> {
+): g_this.T.Type._ltype.resolved__reference.value<pd.SourceLocation> {
     return ['dictionary', type]
 }
 
@@ -186,9 +186,9 @@ export function group(rawProperties: RawDictionary<g_this.T.Type<pd.SourceLocati
     }
 }
 
-export function option(
+export function state(
     type: g_this.T.Type<pd.SourceLocation>,
-): g_this.T.Type._ltype.tagged__union.options.D<pd.SourceLocation> {
+): g_this.T.Type._ltype.state__group.states.D<pd.SourceLocation> {
     return {
         'constraints': pd.d({}),
         'type': type,
@@ -196,17 +196,17 @@ export function option(
 }
 
 
-export function optionConstraint(
+export function stateConstraint(
     type: g_this.T.Type__Selection<pd.SourceLocation>,
     option: string,
-): g_this.T.Type._ltype.tagged__union.options.D.constraints.D<pd.SourceLocation> {
+): g_this.T.Type._ltype.state__group.states.D.constraints.D<pd.SourceLocation> {
     return {
         'type': type,
-        'cast': ['tagged union', {
+        'cast': ['state group', {
             'annotation': pd.getLocationInfo(1),
             'content': {
 
-                'option': {
+                'state': {
                     'annotation': pd.getLocationInfo(1),
                     'key': option
                 }
@@ -215,21 +215,21 @@ export function optionConstraint(
     }
 }
 
-export function constrainedOption(
-    constraints: RawDictionary< g_this.T.Type._ltype.tagged__union.options.D.constraints.D<pd.SourceLocation>>,
+export function constrainedState(
+    constraints: RawDictionary< g_this.T.Type._ltype.state__group.states.D.constraints.D<pd.SourceLocation>>,
     type: g_this.T.Type<pd.SourceLocation>,
-): g_this.T.Type._ltype.tagged__union.options.D<pd.SourceLocation> {
+): g_this.T.Type._ltype.state__group.states.D<pd.SourceLocation> {
     return {
         'constraints': pd.d(constraints),
         'type': type,
     }
 }
 
-export function taggedUnion(
-    options: RawDictionary<g_this.T.Type._ltype.tagged__union.options.D<pd.SourceLocation>>,
+export function stateGroup(
+    states: RawDictionary<g_this.T.Type._ltype.state__group.states.D<pd.SourceLocation>>,
 ): g_this.T.Type<pd.SourceLocation> {
     let firstKey: null | string = null
-    pd.d(options).__mapWithKey(($, key) => {
+    pd.d(states).__mapWithKey(($, key) => {
         if (firstKey === null) {
             firstKey = key
         }
@@ -239,22 +239,21 @@ export function taggedUnion(
     }
 
     return {
-        'type': ['tagged union', {
-            'options': pd.d(options),
+        'type': ['state group', {
+            'states': pd.d(states),
         }]
     }
 }
 
-export function terminal(type: string): g_this.T.Type<pd.SourceLocation> {
+export function atom(type: string): g_this.T.Type<pd.SourceLocation> {
     return {
-        'type': ['terminal', {
-            'terminal': {
+        'type': ['atom', {
+            'atom': {
                 'type': {
                     'annotation': pd.getLocationInfo(1),
                     'key': type,
                 }
             },
-            'constrained': ['no', null],
         }]
     }
 }
@@ -298,15 +297,15 @@ export function t_arr(
     }
 }
 
-export function t_tu(
+export function t_sg(
     opt: string,
     tail?: g_this.T.Type__Selection__Tail<pd.SourceLocation>,
 ): g_this.T.Type__Selection__Tail<pd.SourceLocation> {
     return {
-        'step type': ['tagged union', {
+        'step type': ['state group', {
             'annotation': pd.getLocationInfo(1),
             'content': {
-                'option': r_imp(opt, 1),
+                'state': r_imp(opt, 1),
             },
         }],
         'tail': tail === undefined ? [false] : [true, tail]

@@ -4,17 +4,17 @@ import * as g_pareto_lang_data from "../../../pub/dist/submodules/unresolved"
 
 import {
     array, constrainedDictionary,
-    constrainedOption,
+    constrainedState,
     dictionary,
     globalType,
     group,
-    option,
-    optionConstraint,
+    state,
+    stateConstraint,
     optional,
     prop,
     t_grp,
-    t_tu,
-    taggedUnion,
+    t_sg,
+    stateGroup,
     typeSelection,
     component,
     cyclicSibling,
@@ -28,12 +28,10 @@ import {
 
 export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
     'imports': pd.d({}),
-    'labels': {
-        'atom types': pd.d({
-            "identifier": null,
-            "text": null,
-        }),
-    },
+    'atom types': pd.d({
+        "identifier": null,
+        "text": null,
+    }),
     'global types': pd.d({
         "Atom": globalType(
             group({
@@ -42,60 +40,60 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         ),
         "Type": globalType(
             group({
-                "type": prop(taggedUnion({
-                    "nothing": option(group({
+                "type": prop(stateGroup({
+                    "nothing": state(group({
                     })),
-                    "terminal": option(group({
+                    "terminal": state(group({
                         "terminal": prop(component(resolvedSibling("Atom"))),
-                        "constrained": prop(taggedUnion({
-                            "no": option(group({
+                        "constrained": prop(stateGroup({
+                            "no": state(group({
                             })),
-                            "yes": option(group({
-                                "type": prop(taggedUnion({
-                                    "dictionary": option(component(cyclicSibling("Dictionary Reference"))),
-                                    "cyclic lookup": option(resolvedReference(lookup(cyclicSibling("Global Types")))),
-                                    "non cyclic lookup": option(resolvedReference(lookup(cyclicSibling("Global Types")))),
+                            "yes": state(group({
+                                "type": prop(stateGroup({
+                                    "dictionary": state(component(cyclicSibling("Dictionary Reference"))),
+                                    "cyclic lookup": state(resolvedReference(lookup(cyclicSibling("Global Types")))),
+                                    "non cyclic lookup": state(resolvedReference(lookup(cyclicSibling("Global Types")))),
                                 })),
                             })),
                         })),
                     })),
-                    "dictionary": option(group({
+                    "dictionary": state(group({
                         "key": prop(component(resolvedSibling("Atom"))),
                         "constraints": prop(component(cyclicSibling("Dictionary Constraints"))),
                         "type": prop(component(cyclicSibling("Type"))),
                     })),
-                    "array": option(group({
+                    "array": state(group({
                         "type": prop(component(cyclicSibling("Type"))),
                     })),
-                    "optional": option(group({
+                    "optional": state(group({
                         "type": prop(component(cyclicSibling("Type"))),
                     })),
-                    "tagged union": option(group({
+                    "tagged union": state(group({
                         "options": prop(dictionary(group({
                             "constraints": prop(component(cyclicSibling("Option Constraints"))),
                             "type": prop(component(cyclicSibling("Type"))),
                         }))),
                     })),
-                    "group": option(group({
+                    "group": state(group({
                         "properties": prop(dictionary(group({
                             "type": prop(component(cyclicSibling("Type"))),
                         }))),
                     })),
-                    "component": option(group({
-                        "context": prop(taggedUnion({
-                            "resolved sibling": option(group({
+                    "component": state(group({
+                        "context": prop(stateGroup({
+                            "resolved sibling": state(group({
                                 "type": prop(resolvedReference(lookup(cyclicSibling("Global Types")))),
                             })),
-                            "import": option(group({
+                            "import": state(group({
                                 "library": prop(resolvedReference(dict(dictSel(typeSelection("Imports"))))),
                                 "type": prop(resolvedReference(lookup(cyclicSibling("Global Types")))),
                             })),
-                            "cyclic sibling": option(group({
+                            "cyclic sibling": state(group({
                                 "type": prop(resolvedReference(lookup(cyclicSibling("Global Types")))),
                             })),
                         })),
                     })),
-                    "foo": option(group({
+                    "foo": state(group({
                     })),
                 })),
             })
@@ -103,10 +101,10 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         "Dictionary Constraints": globalType(
             dictionary(group({
                 "type": prop(component(cyclicSibling("Type Selection"))),
-                "cast": prop(taggedUnion({
-                    "dictionary": constrainedOption(
+                "cast": prop(stateGroup({
+                    "dictionary": constrainedState(
                         {
-                            "dictionary": optionConstraint(typeSelection("Type", t_grp("type")), "dictionary")
+                            "dictionary": stateConstraint(typeSelection("Type", t_grp("type")), "dictionary")
                         },
                         group({}),
                     )
@@ -116,13 +114,13 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         "Option Constraints": globalType(
             dictionary(group({
                 "type": prop(component(cyclicSibling("Type Selection"))),
-                "cast": prop(taggedUnion({
-                    "tagged union": constrainedOption(
+                "cast": prop(stateGroup({
+                    "tagged union": constrainedState(
                         {
-                            "tagged union": optionConstraint(typeSelection("Type", t_grp("type")), "tagged union")
+                            "tagged union": stateConstraint(typeSelection("Type", t_grp("type")), "tagged union")
                         },
                         group({
-                            "option": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))))),
+                            "option": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_sg("tagged union", t_grp("options")))))))),
                         }),
                     )
                 }))
@@ -131,10 +129,10 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         "Dictionary Reference": globalType(
             group({
                 "type": prop(component(cyclicSibling("Type Selection"))),
-                "cast": prop(taggedUnion({
-                    "dictionary": constrainedOption(
+                "cast": prop(stateGroup({
+                    "dictionary": constrainedState(
                         {
-                            "dictionary": optionConstraint(typeSelection("Type", t_grp("type")), "dictionary")
+                            "dictionary": stateConstraint(typeSelection("Type", t_grp("type")), "dictionary")
                         },
                         group({}),
                     )
@@ -157,25 +155,25 @@ export const $: g_pareto_lang_data.T.Type__Library<pd.SourceLocation> = {
         ),
         "Type Selection Tail": globalType(
             group({
-                "step type": prop(taggedUnion({
-                    "dictionary": constrainedOption({
-                        "dictionary": optionConstraint(typeSelection("Type", t_grp("type")), "dictionary")
+                "step type": prop(stateGroup({
+                    "dictionary": constrainedState({
+                        "dictionary": stateConstraint(typeSelection("Type", t_grp("type")), "dictionary")
                     }, group({})),
-                    "optional": constrainedOption({
-                        "optional": optionConstraint(typeSelection("Type", t_grp("type")), "optional")
+                    "optional": constrainedState({
+                        "optional": stateConstraint(typeSelection("Type", t_grp("type")), "optional")
                     }, group({})),
-                    "array": constrainedOption({
-                        "array": optionConstraint(typeSelection("Type", t_grp("type")), "array")
+                    "array": constrainedState({
+                        "array": stateConstraint(typeSelection("Type", t_grp("type")), "array")
                     }, group({})),
-                    "group": constrainedOption({
-                        "group": optionConstraint(typeSelection("Type", t_grp("type")), "group")
+                    "group": constrainedState({
+                        "group": stateConstraint(typeSelection("Type", t_grp("type")), "group")
                     }, group({
-                        "property": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_tu("group", t_grp("properties"))))))))
+                        "property": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_sg("group", t_grp("properties"))))))))
                     })),
-                    "tagged union": constrainedOption({
-                        "tagged union": optionConstraint(typeSelection("Type", t_grp("type")), "tagged union")
+                    "tagged union": constrainedState({
+                        "tagged union": stateConstraint(typeSelection("Type", t_grp("type")), "tagged union")
                     }, group({
-                        "option": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_tu("tagged union", t_grp("options")))))))),
+                        "option": prop(resolvedReference(dict(dictSel(typeSelection("Type", t_grp("type", t_sg("tagged union", t_grp("options")))))))),
                     })),
                 })),
                 "tail": prop(optional(component(cyclicSibling("Type Selection Tail"))))
